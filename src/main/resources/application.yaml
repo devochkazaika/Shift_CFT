@@ -3,7 +3,7 @@ server:
 
 spring:
     datasource:
-        url: jdbc:postgresql://localhost:5430/wallet1
+        url: jdbc:postgresql://localhost:5430/wallet
         username: postgres
         password: postgres
     flyway:
