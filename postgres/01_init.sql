@@ -1,1 +1,1 @@
-create database wallet1 with owner = postgres;
+create database wallet with owner = postgres;
