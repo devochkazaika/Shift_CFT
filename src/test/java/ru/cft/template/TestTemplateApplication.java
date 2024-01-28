@@ -17,7 +17,7 @@ public class TestTemplateApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(TemplateApplication::main).with(TestTemplateApplication.class).run(args);
+		SpringApplication.from(WalletApplication::main).with(TestTemplateApplication.class).run(args);
 	}
 
 }

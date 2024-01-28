@@ -1,0 +1,1 @@
+create table check_create_table(id bigserial not null);

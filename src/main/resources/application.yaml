@@ -1,0 +1,12 @@
+server:
+    port: 8080
+
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5430/wallet1
+        username: postgres
+        password: postgres
+    flyway:
+        enabled: true
+        locations:
+          - db.migration
