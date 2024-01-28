@@ -1,6 +1,3 @@
-//apply plugin: 'org.springframework.boot'
-//apply plugin: 'docker-compose'
-
 buildscript {
 	repositories {
 		mavenCentral()
