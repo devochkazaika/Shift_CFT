@@ -35,6 +35,7 @@ services:
       timeout: 10s
   tests:
     image: wil124/shift-intensiv-winter-2024-tests
+    pull_policy: always
     container_name: tests
     ports:
       - "8090:8080"
