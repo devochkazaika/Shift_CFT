@@ -50,3 +50,9 @@ dockerCompose() {
 	projectName = 'wallet'
 	useComposeFiles = ['docker-compose.yml']
 }
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'ru.cft.template.WalletApplication'
+	}
+}

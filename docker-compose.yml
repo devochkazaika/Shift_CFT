@@ -1,4 +1,4 @@
-version: '1.0'
+version: '3.9'
 services:
   # Сервис для разворачивания контейнера с базой данных
   postgres:
@@ -9,7 +9,35 @@ services:
       - ./postgres:/docker-entrypoint-initdb.d
     environment:
       - POSTGRES_DB=wallet
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=wallet
+      - POSTGRES_PASSWORD=wallet
     ports:
-      - "5430:5432"
+      - "5430:5430"
+  # Сервис для разворачивания контейнера с приложением
+  webapi:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    hostname: webapi
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5430/wallet
+      - POSTGRES_USER=wallet
+      - POSTGRES_PASSWORD=wallet
+    healthcheck:
+      test: curl http://localhost:8080 || exit 0
+      interval: 10s
+      retries: 5
+      start_period: 15s
+      timeout: 10s
+  tests:
+    image: wil124/shift-intensiv-winter-2024-tests
+    pull_policy: always
+    container_name: tests
+    ports:
+      - "8090:8080"
+    depends_on:
+      - webapi
