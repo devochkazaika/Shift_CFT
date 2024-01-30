@@ -12,7 +12,7 @@ services:
       - POSTGRES_USER=wallet
       - POSTGRES_PASSWORD=wallet
     ports:
-      - "5432:5432"
+      - "5430:5430"
   # Сервис для разворачивания контейнера с приложением
   webapi:
     build:
@@ -24,7 +24,7 @@ services:
     depends_on:
       - postgres
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/wallet
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5430/wallet
       - POSTGRES_USER=wallet
       - POSTGRES_PASSWORD=wallet
     healthcheck:
