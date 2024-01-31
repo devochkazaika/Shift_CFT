@@ -28,4 +28,12 @@ public class UserController {
     public Optional<User> getUsers(@PathVariable Long id) {
         return usersRepo.findById(id);
     }
+    @PostMapping("/users")
+    public void save(@RequestBody User user) {
+        usersRepo.save(user);
+    }
+    @PatchMapping("/users/{id}")
+    public void update(@PathVariable Long id, @RequestBody User user) {
+        usersRepo.update(id, user);
+    }
 }

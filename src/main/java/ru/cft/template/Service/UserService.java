@@ -1,5 +1,6 @@
 package ru.cft.template.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.cft.template.Models.User;
@@ -20,5 +21,15 @@ public class UserService implements IUser{
     public List<User> findAll() {
 
         return userRepo.findAll();
+    }
+    @Override
+    public void save(User user) {
+        userRepo.save(user);
+    }
+    @Override
+    @Transactional
+    public void update(Long id, User user) {
+        userRepo.setUserInfoById(user.getFirstName(), user.getLastName(), user.getEmail(),
+                id);
     }
 }

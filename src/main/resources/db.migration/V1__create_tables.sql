@@ -3,6 +3,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     walletid VARCHAR(255),
+    password VARCHAR(255),
     firstname VARCHAR(255),
     lastname VARCHAR(255),
     fullname VARCHAR(255),

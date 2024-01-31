@@ -19,7 +19,7 @@ group = 'ru.cft'
 version = '0.0.1'
 
 java {
-	sourceCompatibility = '17'
+	sourceCompatibility = '17-jdk-slim'
 }
 
 repositories {

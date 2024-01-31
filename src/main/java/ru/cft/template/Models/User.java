@@ -16,6 +16,10 @@ public class User {
     private Long id;
     @Column(name = "walletid")
     private String walletId;
+
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "firstname")
     private String firstName;
     @Column(name = "lastname")
