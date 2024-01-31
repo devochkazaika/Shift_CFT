@@ -9,7 +9,13 @@ spring:
         url: jdbc:postgresql://localhost:5430/wallet
         username: wallet
         password: wallet
+    thymeleaf:
+        enabled=false:
     flyway:
         enabled: true
         locations:
           - db.migration
+        validate:
+            -on
+            -migrate=false
+
