@@ -27,4 +27,12 @@ CREATE TABLE IF NOT EXISTS wallets (
     lastupdate DATE
 );
 
+--CREATE TABLE IF NOT EXISTS history(
+--    id SERIAL PRIMARY KEY,
+--    userid int,
+--    type VARCHAR(255),
+--    transactionDate DATE,
+--    lastupdate DATE
+--);
+
 --create table if not exists check_create_table(id bigserial not null);

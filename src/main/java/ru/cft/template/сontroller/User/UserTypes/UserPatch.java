@@ -1,10 +1,9 @@
-package ru.cft.template.сontroller.User.UserTypes.Patch;
+package ru.cft.template.сontroller.User.UserTypes;
 
 import lombok.Data;
-import ru.cft.template.сontroller.User.UserTypes.UserDTO;
 
 @Data
-public class UserPatch extends UserDTO {
+public class UserPatch {
     private String firstName;
     private String lastName;
     private String email;

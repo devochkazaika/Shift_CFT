@@ -8,7 +8,6 @@ import ru.cft.template.dao.UserRepository;
 import ru.cft.template.model.Session;
 import ru.cft.template.service.impl.ISession;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 

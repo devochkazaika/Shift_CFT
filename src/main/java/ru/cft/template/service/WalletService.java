@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.cft.template.dao.WalletRepository;
 import ru.cft.template.model.Wallet;
 import ru.cft.template.service.impl.IWallet;
-import ru.cft.template.сontroller.Wallet.WalletTypes.UserData;
 
 import java.util.Optional;
 

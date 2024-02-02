@@ -1,13 +1,12 @@
-package ru.cft.template.сontroller.User.UserTypes.Get;
+package ru.cft.template.сontroller.User.UserTypes;
 
 import lombok.Data;
 import ru.cft.template.model.User;
-import ru.cft.template.сontroller.User.UserTypes.UserDTO;
 
 import java.time.LocalDate;
 
 @Data
-public class GetUsers extends UserDTO {
+public class GetUsers{
     private Long id;
     private Long walletId;
     private String firstName;

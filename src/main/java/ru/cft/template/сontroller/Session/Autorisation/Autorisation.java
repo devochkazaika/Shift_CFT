@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+//Пока без защиты
 @Data
 public class Autorisation {
     private Long id;

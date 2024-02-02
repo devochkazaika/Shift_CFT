@@ -3,15 +3,10 @@ package ru.cft.template.сontroller.Wallet;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.cft.template.model.User;
 import ru.cft.template.model.Wallet;
-import ru.cft.template.service.UserService;
 import ru.cft.template.service.WalletService;
 import ru.cft.template.сontroller.Wallet.WalletTypes.GetWallet;
 import ru.cft.template.сontroller.Wallet.WalletTypes.UserData;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -20,7 +15,7 @@ public class WalletController {
     @Autowired
     private final WalletService walletRepo;
 
-    @GetMapping("/wallet/bill/{id}")
+    @GetMapping("/wallet/bill/{id}/current")
     public GetWallet getBill(@PathVariable Long id) {
         Wallet wallet = walletRepo.findById(id).orElse(null);
         if (wallet != null) return new GetWallet(wallet);
