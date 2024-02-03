@@ -1,7 +1,7 @@
 
 ### STS ###
 .gradle
-.build
+build
 .apt_generated
 .classpath
 .factorypath
