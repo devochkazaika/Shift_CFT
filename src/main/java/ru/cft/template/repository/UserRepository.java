@@ -1,4 +1,4 @@
-package ru.cft.template.dao;
+package ru.cft.template.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                          @Param("userId") Long userId);
 
     @Query("select u from User u where u.phone = :phone")
-    List<User> findByPhone(@Param("phone") Integer phone);
+    List<User> findByPhone(@Param("phone") Long phone);
 
     Optional<User> findById(Long id);
 
