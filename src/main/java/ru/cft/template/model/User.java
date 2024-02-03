@@ -36,7 +36,7 @@ public class User {
     private String email;
 
     @Column(name = "phone")
-    private Integer phone;
+    private Long phone;
 
     @Min(18)
     @Max(100)

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.cft.template.model.User;
-import ru.cft.template.service.UserService;
+import ru.cft.template.service.impl.UserService;
 import ru.cft.template.сontroller.User.UserTypes.GetUsers;
 import ru.cft.template.сontroller.User.UserTypes.UserPatch;
 
@@ -14,42 +14,25 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping
+@RequestMapping("/users")
 public class UserController {
     @Autowired
-    private final UserService usersRepo;
+    private final UserService usersService;
 
-    @GetMapping("/users")
+    @GetMapping
     public List<GetUsers> getUsers() {
-        List<User> users = usersRepo.findAll();
-        List<GetUsers> userRequest = new ArrayList<GetUsers>();
-        for (User user : users){
-            userRequest.add(new GetUsers(user));
-        }
-        return userRequest;
+        return usersService.getUsers();
     }
-    @GetMapping("/users/{id}")
-    public GetUsers getUsers(@PathVariable Long id) {
-        User user = usersRepo.findById(id).orElse(null);
-        if (user != null) return new GetUsers(user);
-        else return null;
+    @GetMapping("/{id}")
+    public GetUsers getUser(@PathVariable Long id) {
+        return usersService.getUser(id);
     }
-    @PostMapping("/users")
+    @PostMapping
     public void save(@RequestBody User user) {
-        usersRepo.save(user);
+        usersService.save(user);
     }
-    @PatchMapping("/users/{id}")
+    @PatchMapping("/{id}")
     public GetUsers update(@PathVariable Long id, @RequestBody UserPatch userPatch) {
-        User user = usersRepo.findById(id).orElse(null);
-        if (user != null) {
-            user.setFirstName(userPatch.getFirstName());
-            user.setLastName(userPatch.getLastName());
-            user.setFullName(userPatch.getFirstName() + " " + userPatch.getLastName());
-            user.setEmail(userPatch.getEmail());
-            user.setLastUpdateDate(LocalDate.now());
-            usersRepo.update(id, user);
-            return getUsers(id);
-        }
-        return null;
+        return usersService.update(id, userPatch);
     }
 }

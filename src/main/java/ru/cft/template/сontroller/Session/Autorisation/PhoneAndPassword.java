@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PhoneAndPassword {
-    private Integer phone;
+    private Long phone;
     private String password;
 }

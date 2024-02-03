@@ -1,0 +1,21 @@
+server:
+    port: 8080
+
+spring:
+    datasource:
+        # По умолчанию postgresql имеет 5432 порт. Но так как подразумевается запуск через docker-compose, указан порт
+        # из docker-compose.yaml для корректной проброски. Если у вас локально установлен postgresql и вы собираетесь
+        # использовать его, то требуется поменить его на нужный
+        url: jdbc:postgresql://localhost:5430/wallet
+        username: wallet
+        password: wallet
+    thymeleaf:
+        enabled=false:
+    flyway:
+        enabled: true
+        locations:
+          - db.migration
+        validate:
+            -on
+            -migrate=false
+

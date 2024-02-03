@@ -8,24 +8,24 @@ import java.time.LocalDate;
 @Data
 public class GetUsers{
     private Long id;
-    private Long walletId;
+    private String walletId;
     private String firstName;
     private String lastName;
     private String fullName;
     private String email;
-    private Integer phone;
+    private Long phone;
     private LocalDate registrationDate;
     private LocalDate lastUpdateDate;
     private Integer age;
     public GetUsers(User user){
         id = user.getId();
         firstName = user.getFirstName();
-        walletId = user.getWallet().getId();
+        walletId = user.getWallet().getId().toString();
         lastName = user.getLastName();
         phone = user.getPhone();
         age = user.getAge();
         email = user.getEmail();
-        fullName = firstName + lastName;
+        fullName = firstName + " " + lastName;
         registrationDate = user.getRegistrationDate();
         lastUpdateDate = user.getLastUpdateDate();
 

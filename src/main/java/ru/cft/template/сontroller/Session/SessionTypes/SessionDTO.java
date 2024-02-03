@@ -1,4 +1,4 @@
-package ru.cft.template.сontroller.Session;
+package ru.cft.template.сontroller.Session.SessionTypes;
 
 import lombok.Data;
 import ru.cft.template.model.Session;

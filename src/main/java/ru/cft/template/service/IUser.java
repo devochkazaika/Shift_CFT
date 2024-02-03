@@ -1,14 +1,17 @@
-package ru.cft.template.service.impl;
+package ru.cft.template.service;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.cft.template.model.User;
+import ru.cft.template.сontroller.User.UserTypes.GetUsers;
+import ru.cft.template.сontroller.User.UserTypes.UserPatch;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IUser {
-    Optional<User> findById(Long id);
-    List<User> findAll();
+    GetUsers getUser(Long id);
+    List<GetUsers> getUsers();
     void save(User user);
-    void update(Long id, User user);
-    User findByPhone(Integer phone);
+    GetUsers update(Long id, UserPatch userPatch);
+    User findByPhone(Long phone);
 }

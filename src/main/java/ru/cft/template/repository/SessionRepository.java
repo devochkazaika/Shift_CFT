@@ -1,4 +1,4 @@
-package ru.cft.template.repositories;
+package ru.cft.template.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
