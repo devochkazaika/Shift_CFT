@@ -28,7 +28,7 @@ public class UserController {
         return usersService.getUser(id);
     }
     @PostMapping
-    public void save(@RequestBody User user) {
+    public void save(@RequestBody User user) throws Exception {
         usersService.save(user);
     }
     @PatchMapping("/{id}")

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface IUser {
     GetUsers getUser(Long id);
     List<GetUsers> getUsers();
-    void save(User user);
+    void save(User user) throws Exception;
     GetUsers update(Long id, UserPatch userPatch);
     User findByPhone(Long phone);
 }

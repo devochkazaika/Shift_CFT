@@ -38,16 +38,19 @@ public class UserService implements IUser {
 //        return userRepo.findAll();
     }
     @Override
-    public void save(User user) {
-        Wallet wallet = new Wallet();
-        user.setWallet(wallet);
-        wallet.setAmount(0L);
-        wallet.setId(user.getId());
-        wallet.setUser(user);
-        wallet.setLastUpdate(LocalDate.now());
+    public void save(User user) throws Exception {
+        if (userRepo.findByPhone(user.getPhone()).orElse(null) == null) {
+            Wallet wallet = new Wallet();
+            user.setWallet(wallet);
+            wallet.setAmount(0L);
+            wallet.setId(user.getId());
+            wallet.setUser(user);
+            wallet.setLastUpdate(LocalDate.now());
 
-        userRepo.save(user);
-        walletRepo.save(wallet);
+            userRepo.save(user);
+            walletRepo.save(wallet);
+        }
+        else throw new Exception("Данный номер существует");
     }
     @Override
     @Transactional

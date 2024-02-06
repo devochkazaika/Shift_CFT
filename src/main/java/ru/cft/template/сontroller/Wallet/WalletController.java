@@ -2,10 +2,13 @@ package ru.cft.template.сontroller.Wallet;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.web.bind.annotation.*;
 import ru.cft.template.model.Wallet;
 import ru.cft.template.service.impl.WalletService;
+import ru.cft.template.сontroller.Wallet.WalletTypes.GetTransfer;
 import ru.cft.template.сontroller.Wallet.WalletTypes.GetWallet;
+import ru.cft.template.сontroller.Wallet.WalletTypes.PostTransfer;
 import ru.cft.template.сontroller.Wallet.WalletTypes.UserData;
 
 @RestController
@@ -25,5 +28,10 @@ public class WalletController {
         return walletService.updateBalance(userData.getUserId(), userData.getAmount());
     }
 
+    @Modifying
+    @PostMapping("/transfers")
+    public GetTransfer transfer(@RequestBody PostTransfer data) throws Exception {
+        return walletService.transfer(data);
+    }
 
 }
