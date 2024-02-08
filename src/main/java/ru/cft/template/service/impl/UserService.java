@@ -8,13 +8,12 @@ import ru.cft.template.repository.WalletRepository;
 import ru.cft.template.model.User;
 import ru.cft.template.model.Wallet;
 import ru.cft.template.service.IUser;
-import ru.cft.template.сontroller.User.UserTypes.GetUsers;
-import ru.cft.template.сontroller.User.UserTypes.UserPatch;
+import ru.cft.template.сontroller.User.DTO.GetUsers;
+import ru.cft.template.сontroller.User.DTO.UserPatch;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -38,16 +37,19 @@ public class UserService implements IUser {
 //        return userRepo.findAll();
     }
     @Override
-    public void save(User user) {
-        Wallet wallet = new Wallet();
-        user.setWallet(wallet);
-        wallet.setAmount(0L);
-        wallet.setId(user.getId());
-        wallet.setUser(user);
-        wallet.setLastUpdate(LocalDate.now());
+    public void save(User user) throws Exception {
+        if (userRepo.findByPhone(user.getPhone()).orElse(null) == null) {
+            Wallet wallet = new Wallet();
+            user.setWallet(wallet);
+            wallet.setAmount(0L);
+            wallet.setId(user.getId());
+            wallet.setUser(user);
+            wallet.setLastUpdate(LocalDate.now());
 
-        userRepo.save(user);
-        walletRepo.save(wallet);
+            userRepo.save(user);
+            walletRepo.save(wallet);
+        }
+        else throw new Exception("Данный номер существует");
     }
     @Override
     @Transactional

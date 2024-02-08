@@ -12,7 +12,10 @@ import java.util.Optional;
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
     @Query("select w from Wallet w where w.user.id = :id")
-    Optional<Wallet> findById(@Param("id") Long id);
+    Optional<Wallet> findByUserId(@Param("id") Long id);
+
+    @Query("select w from Wallet w where w.user.phone = :phone")
+    Optional<Wallet> findByPhone(@Param("phone") Long phone);
 
     @Modifying
     @Query("update Wallet w set w.amount = w.amount + :amount where w.user.id = :id")

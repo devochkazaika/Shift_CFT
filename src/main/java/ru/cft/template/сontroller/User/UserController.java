@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.cft.template.model.User;
 import ru.cft.template.service.impl.UserService;
-import ru.cft.template.сontroller.User.UserTypes.GetUsers;
-import ru.cft.template.сontroller.User.UserTypes.UserPatch;
+import ru.cft.template.сontroller.User.DTO.GetUsers;
+import ru.cft.template.сontroller.User.DTO.UserPatch;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,7 +26,7 @@ public class UserController {
         return usersService.getUser(id);
     }
     @PostMapping
-    public void save(@RequestBody User user) {
+    public void save(@RequestBody User user) throws Exception {
         usersService.save(user);
     }
     @PatchMapping("/{id}")
