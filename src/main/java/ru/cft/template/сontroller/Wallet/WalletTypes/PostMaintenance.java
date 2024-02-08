@@ -3,9 +3,9 @@ package ru.cft.template.сontroller.Wallet.WalletTypes;
 import lombok.Data;
 
 @Data
-public class PostTransfer {
+public class PostMaintenance {
     private String userId;
-    private Long receiverPhone;
-    private Long maintenanceNumber;
+    private Long phone;
     private Long amount;
+    private String comment;
 }

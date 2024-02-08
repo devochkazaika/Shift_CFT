@@ -8,13 +8,12 @@ import ru.cft.template.repository.WalletRepository;
 import ru.cft.template.model.User;
 import ru.cft.template.model.Wallet;
 import ru.cft.template.service.IUser;
-import ru.cft.template.сontroller.User.UserTypes.GetUsers;
-import ru.cft.template.сontroller.User.UserTypes.UserPatch;
+import ru.cft.template.сontroller.User.DTO.GetUsers;
+import ru.cft.template.сontroller.User.DTO.UserPatch;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

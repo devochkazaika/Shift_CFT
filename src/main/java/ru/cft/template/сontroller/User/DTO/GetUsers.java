@@ -1,4 +1,4 @@
-package ru.cft.template.сontroller.User.UserTypes;
+package ru.cft.template.сontroller.User.DTO;
 
 import lombok.Data;
 import ru.cft.template.model.User;
