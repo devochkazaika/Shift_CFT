@@ -1,10 +1,7 @@
 package ru.cft.template.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -26,14 +23,26 @@ public class Bill {
     @Column(name="amount")
     private Long amount;
 
+    public void setAmount(Long amount){
+        this.amount = amount;
+        this.amountRemains = amount;
+    }
+    public Bill amount(Long amount){
+        setAmount(amount);
+        return this;
+    }
+
     @Column(name="type")
     private String type;
 
     @Column(name = "maintenancenumber")
     private Long maintenanceNumber;
 
-    @Transient
-    private Boolean status;
+    @Column(name="status")
+    private String status;
+
+    @Column(name = "amountremains")
+    private long amountRemains;
 
     @Transient
     private LocalDate transactionDate;

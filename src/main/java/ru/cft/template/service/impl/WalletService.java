@@ -1,6 +1,7 @@
 package ru.cft.template.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.Modifying;
@@ -34,12 +35,6 @@ public class WalletService implements IWallet {
     private final BillRepository billRepo;
     private final UserRepository userRepo;
 
-    @Override
-    public GetWallet getBill(Long id){
-        Bill bill = billRepo.findById(id).orElse(null);
-        if (bill != null) return new GetWallet(bill);
-        return null;
-    }
 
     @Override
     @Transactional
@@ -64,74 +59,66 @@ public class WalletService implements IWallet {
     @Transactional
     private void changeBalance(Wallet wallet, Long sum){
         wallet.setAmount(wallet.getAmount() + sum);
-//        System.out.println(wallet.getAmount());
     }
 
     @Override
     @Transactional
+    @Modifying
     public GetTransfer transfer(@RequestBody PostTransfer data) throws Exception{
-        Wallet walletSender = walletRepo.findByUserId(Long.parseLong(data.getUserId())).orElse(null);
-
-        Wallet walletReceiver = walletRepo.findByPhone(data.getReceiverPhone()).orElse(null);
-
-        if (walletSender == null || walletReceiver == null) {
-            throw new Exception("Неправильный id отправителя или неправильный номер получателя");
+        if (data.getReceiverPhone() == null){
+            return transferToBill(data);
         }
+        else {
+            return transferToBill(data);
+        }
+    }
+
+    private GetTransfer transferToBill(PostTransfer data){
+        Wallet walletSender = walletRepo.findByUserId(Long.parseLong(data.getUserId())).orElse(null);
+        if (walletSender == null) {
+            throw new NullPointerException("Неправильный id отправителя");
+        }
+
+        Bill bill = billRepo.findById(data.getMaintenanceNumber()).orElse(null);
+        if (bill != null){
+            billRepo.changeAmountRemains(bill.getId(), data.getAmount());
+            if (bill.getAmountRemains() <= 0){
+                billRepo.changeStatus(data.getMaintenanceNumber());
+            }
+            System.out.println(bill.getAmountRemains());
+        }
+        else throw new NullPointerException("неправильный номер счёта");
+
+        return new GetTransfer()
+                .setId(bill.getId().toString())
+                .setUserId(data.getUserId())
+                .setWallet(walletSender.getId().toString(), data.getAmount());
+    }
+    private GetTransfer transferToPhone(Wallet walletSender, PostTransfer data) throws Exception{
+        Wallet walletReceiver = walletRepo.findByPhone(data.getReceiverPhone()).orElse(null);
+        Bill bill = Bill.builder()
+                .user(walletSender.getUser())
+                .amount(data.getAmount())
+                .build();
+
         if (walletSender.getAmount() - data.getAmount() < 0){
             throw new Exception("недостаточно средств");
         }
-
-        if (data.getReceiverPhone() == null){
-            Bill bill = new Bill();
-            bill.setMaintenanceNumber(data.getMaintenanceNumber());
-            bill.setUser(walletSender.getUser());
-            bill.setType("inbound");
-            bill.setAmount(data.getAmount());
-            billRepo.save(bill);
+        if ( walletReceiver == null) {
+            throw new NullPointerException("Неправильный id получателя");
         }
-        changeBalance(walletSender, (-1) * data.getAmount());
+
+        billRepo.changeAmountRemains(bill.getId(), bill.getAmount()-data.getAmount());
+        if (bill.getAmountRemains() <= 0){
+            billRepo.changeStatus(data.getMaintenanceNumber());
+        }
         changeBalance(walletReceiver, data.getAmount());
         return new GetTransfer()
+                .setId(bill.getId().toString())
                 .setUserId(data.getUserId())
-                .setWallet(walletReceiver.getId().toString(), data.getAmount());
+                .setWallet(walletSender.getId().toString(), data.getAmount());
+
     }
 
-    @Override
-    public List<GetBill> getBillS(Long userId){
-        List<Bill> bills = billRepo.getBills(userId);
-        List<GetBill> getReq = new ArrayList<>();
-        for (Bill bill : bills){
-            getReq.add(new GetBill(bill));
-        }
-        return getReq;
-    }
 
-    @Override
-    public GetMaintenance maintenancePost(PostMaintenance maintenance) throws Exception{
-        User userSender = userRepo.findById(Long.parseLong(maintenance.getUserId()))
-                .orElse(null);
-        User userReceiver = userRepo.findByPhone(maintenance.getPhone())
-                .orElse(null);
-
-        if (userSender==null || userReceiver == null){
-            throw new Exception("Нет такого получателя или отправителя");
-        }
-
-        Bill billSender = Bill.builder()
-                .user(userSender)
-                .amount(maintenance.getAmount())
-                .type("outbound").build();
-        Bill billReceiver = Bill.builder()
-                .user(userReceiver)
-                .amount(maintenance.getAmount())
-                .type("inbound").build();
-
-        billRepo.save(billSender);
-        billRepo.save(billReceiver);
-
-        GetMaintenance get = GetMaintenance.builder()
-                .id(userReceiver.getId())
-                .build();
-        return get;
-    }
 }

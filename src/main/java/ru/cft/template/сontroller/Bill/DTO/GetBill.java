@@ -12,7 +12,7 @@ public class GetBill {
     private String type;
     private Long amount;
     private Long maintenanceNumber;
-    private Boolean status;
+    private String status;
     private LocalDate transactionDate;
 
     public GetBill(Bill bill){

@@ -8,5 +8,6 @@ import lombok.Data;
 public class GetMaintenance {
     private Long id;
     private Long maintenanceNumber;
-    private Boolean status;
+    private String status;
+
 }
