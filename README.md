@@ -8,3 +8,6 @@
 * webapi - Контейнер с вашим собранным приложением
 * database - Контейнер с PostgreSQL
 * tests - Контейнер с автотестами. [Результаты прогона автотестов](http://localhost:8090)
+
+## Для тестов
+* Shift_CFT.postman_collection.json - файл для импорта в postman
