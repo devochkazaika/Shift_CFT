@@ -67,11 +67,13 @@ public class BillService implements IBill {
 
         Bill billSender = Bill.builder()
                 .user(userSender)
+                .userTwo(userReceiver)
                 .amount(maintenance.getAmount())
                 .type("outbound").build();
         Bill billReceiver = Bill.builder()
                 .status("noGet")
                 .user(userReceiver)
+                .userTwo(userSender)
                 .amount(maintenance.getAmount())
                 .type("inbound").build();
 

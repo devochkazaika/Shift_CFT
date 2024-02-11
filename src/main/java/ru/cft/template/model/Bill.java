@@ -20,6 +20,10 @@ public class Bill {
     @JoinColumn(name="userid")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name="othertwo")
+    private User userTwo;
+
     @Column(name="amount")
     private Long amount;
 

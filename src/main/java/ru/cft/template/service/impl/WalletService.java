@@ -49,6 +49,7 @@ public class WalletService implements IWallet {
         Bill bill = new Bill();
         bill.setUser(user);
         bill.setAmount(amount);
+        bill.setType("update");
 
         billRepo.save(bill);
         return new GetWallet(bill);
@@ -69,8 +70,9 @@ public class WalletService implements IWallet {
             return transferToBill(data);
         }
         else {
-            return transferToBill(data);
+            return transferToPhone(data);
         }
+
     }
 
     private GetTransfer transferToBill(PostTransfer data){
@@ -80,6 +82,7 @@ public class WalletService implements IWallet {
         }
 
         Bill bill = billRepo.findById(data.getMaintenanceNumber()).orElse(null);
+
         if (bill != null){
             billRepo.changeAmountRemains(bill.getId(), data.getAmount());
             if (bill.getAmountRemains() <= 0){
@@ -94,12 +97,15 @@ public class WalletService implements IWallet {
                 .setUserId(data.getUserId())
                 .setWallet(walletSender.getId().toString(), data.getAmount());
     }
-    private GetTransfer transferToPhone(Wallet walletSender, PostTransfer data) throws Exception{
+    private GetTransfer transferToPhone(PostTransfer data) throws Exception{
         Wallet walletReceiver = walletRepo.findByPhone(data.getReceiverPhone()).orElse(null);
-        Bill bill = Bill.builder()
-                .user(walletSender.getUser())
-                .amount(data.getAmount())
-                .build();
+        Wallet walletSender = walletRepo.findById(Long.parseLong(data.getUserId())).orElse(null);
+
+        Bill bill = new Bill();
+        bill.setUser(walletSender.getUser());
+        bill.setType("transfer");
+        bill.setAmount(data.getAmount());
+        billRepo.save(bill);
 
         if (walletSender.getAmount() - data.getAmount() < 0){
             throw new Exception("недостаточно средств");
